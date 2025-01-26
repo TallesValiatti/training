@@ -1,0 +1,18 @@
+-------- Plain Text ---------
+
+Data:
+
+1) Mike lives in New York and has one sister, Joana, who is 31 years old and lives with him. He usually wakes up at 6 AM to start his day. Mike works as a software engineer at a prominent tech company, where he enjoys solving complex problems and developing innovative solutions. In his free time, he loves exploring the city's vibrant food scene, trying out new restaurants and cafes. Mike is also an avid runner and often participates in local marathons and charity runs. Despite his busy schedule, he makes it a point to spend quality time with Joana, organizing weekend outings and movie nights to strengthen their bond. His close-knit family and dynamic lifestyle make his life in New York both exciting and fulfilling.
+2) Joana lives in New York and has one brother, Mike, who is 29 years old and lives with her. She usually wakes up at 6 AM to start her day. Joana works as a marketing manager at a prominent advertising agency, where she excels in creating innovative campaigns and strategies. In her free time, she loves exploring the city's vibrant cultural scene, visiting art galleries, and attending theater performances. Joana is also a fitness enthusiast and often participates in local yoga classes and community fitness events. Despite her busy schedule, she makes it a point to spend quality time with Mike, organizing weekend outings and movie nights to strengthen their bond. Her close-knit family and dynamic lifestyle make her life in New York both exciting and fulfilling.
+
+Questions: 
+Who wakes up at 6 AM to start their day?
+Does joana participate in local yoga classes?
+What is the capital of Brazil?
+
+
+----------- Web page --------
+https://learn.microsoft.com/en-au/azure/ai-services/openai/quotas-limits
+
+Questions:
+What is the quota limit for 'Max fine-tuned model deployments'? 
