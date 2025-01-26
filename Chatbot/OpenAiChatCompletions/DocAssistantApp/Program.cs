@@ -1,13 +1,9 @@
 ﻿#pragma warning disable OPENAI001
-using System.Text;
 using Azure;
 using Azure.AI.OpenAI;
 using DocAssistantApp;
 using Microsoft.Extensions.Configuration;
-using OpenAI.Assistants;
 using OpenAI.Chat;
-using OpenAI.Files;
-using OpenAI.VectorStores;
 
 var builder = new ConfigurationBuilder()
     .SetBasePath(AppContext.BaseDirectory)
