@@ -1,0 +1,6 @@
+@KernelMemory_HostAddress = http://localhost:5169
+
+GET {{KernelMemory_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
