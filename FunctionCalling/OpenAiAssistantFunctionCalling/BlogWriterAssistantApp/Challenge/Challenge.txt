@@ -1,0 +1,85 @@
+Challenge one : If you ask something with incomplete information, the assistant must answer asking for more information.
+
+- Add more instructions to the instructions
+You are a highly capable personal assistant. You help me with all my needs. If you do not have all the information you need to accomplish your tasks, you must ask me for it, do not create any information/parameter by yourself.
+
+Can you create an article about the JAVA programming language?
+Can you create an article about the JAVA programming language? In 300 words. The title must be 'JAVA Programming Language'.
+
+-----
+
+Challenge two : Add a new capability to the assistant. The assistant can now send whatsapp messages.
+
+- add the new capability to the assistant, AssistantService.Create.cs file
+WhatsAppSenderTool.Definition,
+
+- add new handle to the ToolHandler.cs file
+
+if (requiredAction.FunctionName == WhatsAppSenderTool.Name)
+{
+    return await HandlerWhatsAppToolAsync(requiredAction, argumentsJson);
+}
+        
+private async Task<ToolOutput> HandlerWhatsAppToolAsync(RequiredAction requiredAction, JsonDocument argumentsJson)
+{
+    string receiverNumber = argumentsJson.RootElement.GetProperty("receiverNumber").GetString()!;
+    string message = argumentsJson.RootElement.GetProperty("message").GetString()!;
+
+    var tool = new WhatsAppSenderTool();
+
+    var result = await tool.ExecuteAsync(
+        logger, 
+        receiverNumber, 
+        message);
+
+    return new ToolOutput(requiredAction.ToolCallId, result);
+}
+
+- New tool, in the BlogWriterAssistantApp.cs file
+
+using System.Text.Json;
+using OpenAI.Assistants;
+#pragma warning disable OPENAI001
+
+namespace BlogWriterAssistantApp.Tools;
+
+public class WhatsAppSenderTool : ITool
+{
+    public static string Name => nameof(WhatsAppSenderTool);
+
+    public static FunctionToolDefinition Definition => new(Name)
+    {
+        Description = "Send a WhatsApp message to a phone number",
+        Parameters = BinaryData.FromObjectAsJson(
+            new
+            {
+                Type = "object",
+                Properties = new
+                {
+                    ReceiverNumber = new
+                    {
+                        Type = "string",
+                        Description = "The phone number of the person who will receive the message",
+                    },
+                    Message = new
+                    {
+                        Type = "string",
+                        Description = "The message content",
+                    },
+                },
+                Required = new[] { "ReceiverNumber", "Message" },
+            },
+            new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })};
+    
+    public Task<string> ExecuteAsync(ILogger logger, string receiverNumber, string message)
+    {
+        logger.LogInformation("WhatsApp message sent! -> {to}, {message}", receiverNumber, $"{message[..20]}...");
+        
+        // YOUR IMPLEMENTATION HERE
+        
+        return Task.FromResult("WhatsApp message sent successfully");
+    }
+}
+
+- Input
+Can you create an article about the C# programming language? In 300 words. The title must be 'C# Programming Language'. Send this article to me via WhatsApp. My tel number is 11999999999.
