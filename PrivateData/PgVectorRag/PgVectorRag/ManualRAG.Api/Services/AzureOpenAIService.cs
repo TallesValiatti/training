@@ -9,13 +9,13 @@ public class AzureOpenAiService(IConfiguration configuration) : IEmbeddingServic
     {
         Uri oaiEndpoint = new (configuration.GetSection("AzureOpenAI:Url").Value!);
         string oaiKey = configuration.GetSection("AzureOpenAI:Key").Value!;
-        string oaiModel = configuration.GetSection("AzureOpenAI:Model").Value!;
+        string oaiModel = configuration.GetSection("AzureOpenAI:EmbeddingModel").Value!;
 
         var client = new AzureOpenAIClient(
             oaiEndpoint, 
             new AzureKeyCredential(oaiKey));
         
-        var embeddingClient = client.GetEmbeddingClient("text-embedding-ada-002");
+        var embeddingClient = client.GetEmbeddingClient(oaiModel);
         
         var returnValue = embeddingClient.GenerateEmbedding(text);
         return returnValue.Value.ToFloats().ToArray();

@@ -1,0 +1,5 @@
+Com os serviço de container do AZURE, posso criar microsserviços com o Dapr e acessar o rico conjunto de APIs que ele oferece?
+
+Em qual dos livros que a sociedade do anel se divide?
+
+O que é o Azure Redis?

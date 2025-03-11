@@ -5,7 +5,7 @@ namespace ManualRAG.Api.Data;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
-    public DbSet<Book> Books { get; set; } = null!;
+    public DbSet<Chunk> Chunks { get; set; } = null!;
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

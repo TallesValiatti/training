@@ -4,5 +4,5 @@ namespace ManualRAG.Api.Services;
 
 public interface ISearchService
 {
-    public Task<List<Book>> SearcAsync(string? text);
+    public Task<List<Chunk>> SearcAsync(string? text);
 }

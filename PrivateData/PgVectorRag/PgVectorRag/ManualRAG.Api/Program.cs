@@ -7,8 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddScoped<ISearchService, SearchService>();
 builder.Services.AddScoped<IEmbeddingService, AzureOpenAiService>();
+builder.Services.AddScoped<IRagService, RagService>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -22,19 +24,19 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
-app.MapGet("/search-books", async (string? text, ISearchService searchService) => 
-        Results.Ok((object?)await searchService.SearcAsync(text)))
-.WithName("GetSearchBooks")
+app.MapGet("/ask", async (string? text, IRagService service) => 
+        Results.Ok((object?)await service.ExecuteAsync(text)))
+.WithName("Ask")
 .WithOpenApi();
 
 app.MapPost("/create-embeddings", async (IEmbeddingService embeddingService, AppDbContext appDbContext) =>
     {
-        var books = await appDbContext.Books.ToListAsync();
+        var books = await appDbContext.Chunks.ToListAsync();
         foreach (var book in books)
         {
             if (book.Embedding == null)
             {
-                var embedding = embeddingService.CreateEmbedding(book.Description);
+                var embedding = embeddingService.CreateEmbedding(book.Text);
                 book.Embedding = new Vector(embedding);
             }
             

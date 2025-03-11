@@ -3,11 +3,10 @@ using Pgvector;
 
 namespace ManualRAG.Api.Models;
 
-public class Book
+public class Chunk
 {
     public Guid Id { get; set; }
-    public string Name { get; set; } = default!;
-    public string Description { get; set; } = default!;
+    public string Text { get; set; } = null!;
     
     [JsonIgnore]
     public Vector? Embedding { get; set; }

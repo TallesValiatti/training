@@ -8,20 +8,22 @@ namespace ManualRAG.Api.Services;
 
 public class SearchService(AppDbContext appDbContext, IEmbeddingService embeddingService, IConfiguration configuration) : ISearchService
 {
-    public async Task<List<Book>> SearcAsync(string? text)
+    public async Task<List<Chunk>> SearcAsync(string? text)
     {
-        var query = appDbContext.Books.AsQueryable();
+        var query = appDbContext.Chunks.AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(text))
         {
             var searchThreshold = configuration.GetValue<double>("Application:SearchThreshold");
-
+            
             // Embeddings
             var embedding = embeddingService.CreateEmbedding(text);
             var embeddingVector = new Vector(embedding);
 
             query = query
-                .Where(x => x.Embedding!.CosineDistance(embeddingVector) <= searchThreshold);
+                .Where(x => x.Embedding!.CosineDistance(embeddingVector) <= searchThreshold)
+                .OrderBy(x => x.Embedding!.CosineDistance(embeddingVector))
+                .Take(5);
         }
         
         return await query.ToListAsync();
