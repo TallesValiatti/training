@@ -4,10 +4,9 @@ services:
     hostname: db
     image: ankane/pgvector
     ports:
-     - 5444:5432
+     - 5432:5432
     restart: always
     environment:
-      - POSTGRES_DB=VectorStore
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=Teste12345!
       - POSTGRES_HOST_AUTH_METHOD=trust

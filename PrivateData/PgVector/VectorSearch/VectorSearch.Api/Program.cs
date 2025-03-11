@@ -22,10 +22,8 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
-app.MapGet("/search-books", async (string? text, ISearchService searchService) =>
-    {
-        return Results.Ok(await searchService.SearcAsync(text));
-    })
+app.MapGet("/search-books", async (string? text, ISearchService searchService) => 
+        Results.Ok((object?)await searchService.SearcAsync(text)))
 .WithName("GetSearchBooks")
 .WithOpenApi();
 
@@ -46,5 +44,9 @@ app.MapPost("/create-embeddings", async (IEmbeddingService embeddingService, App
     })
     .WithName("CreateEmbeddings")
     .WithOpenApi();
+
+using var scope = app.Services.CreateScope();
+var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+dbContext.Database.Migrate();
 
 app.Run();
