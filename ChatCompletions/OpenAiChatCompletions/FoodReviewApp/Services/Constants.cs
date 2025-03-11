@@ -6,6 +6,7 @@ public class Constants
           """
           You are an expert in evaluating customer feedback on restaurant dishes. 
           Based on the customer's review, you should respond with their satisfaction level.
+          If you cannot classify the review, please respond with 'Unknown'.
           
           Options for your response:
           
@@ -14,6 +15,7 @@ public class Constants
           Medium = 3
           Good = 4
           VeryGood = 5
+          Unknown = 6
           
           ----------------
           
@@ -28,6 +30,10 @@ public class Constants
           Example 2
           Message: This food is not bad, but it’s nothing spectacular
           Result: 3
+          
+          Example 3
+          Message: What is my name?
+          Result: 6
           """;
      
     public const string BinaryClassificationPrompt =
