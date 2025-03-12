@@ -8,8 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
-    <PackageReference Include="Microsoft.KernelMemory.AI.AzureOpenAI" Version="0.96.250120.1" />
-    <PackageReference Include="Microsoft.KernelMemory.Core" Version="0.96.250120.1" />
+    <PackageReference Include="Microsoft.KernelMemory.AI.AzureOpenAI" Version="0.97.250211.1" />
+    <PackageReference Include="Microsoft.KernelMemory.Core" Version="0.97.250211.1" />
+    <PackageReference Include="Microsoft.KernelMemory.MemoryDb.Qdrant" Version="0.97.250211.1" />
     <PackageReference Include="Scalar.AspNetCore" Version="1.2.47" />
   </ItemGroup>
 

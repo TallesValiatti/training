@@ -63,7 +63,12 @@ public class MemoryService : IMemoryService
         return new KernelMemoryBuilder()
             .WithAzureOpenAITextGeneration(chatConfig)
             .WithAzureOpenAITextEmbeddingGeneration(embeddingConfig)
-            .WithSimpleVectorDb()
+            .WithSimpleVectorDb() // Memory
             .Build<MemoryServerless>();
+            // .WithQdrantMemoryDb("http://localhost:6333") // Qdrant
+            // .Build<MemoryServerless>(new KernelMemoryBuilderBuildOptions
+            // {
+            //     AllowMixingVolatileAndPersistentData = true
+            // });
     }
 }
