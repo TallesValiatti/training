@@ -21,8 +21,8 @@ public class SearchService(AppDbContext appDbContext, IEmbeddingService embeddin
             var embeddingVector = new Vector(embedding);
 
             query = query
-                .Where(x => x.Embedding!.CosineDistance(embeddingVector) <= searchThreshold)
                 .OrderBy(x => x.Embedding!.CosineDistance(embeddingVector))
+                .Where(x => x.Embedding!.CosineDistance(embeddingVector) <= searchThreshold)
                 .Take(5);
         }
         

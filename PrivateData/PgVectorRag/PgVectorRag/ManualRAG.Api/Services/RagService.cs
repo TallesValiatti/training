@@ -13,6 +13,7 @@ public class RagService(ISearchService searchService, IConfiguration configurati
                                    Your primary role is to ensure that responses are accurate, relevant, and well-structured.
                                    If there ir no data provided, please respond ONLY '[INFO NOT FOUND]'.
                                    At the end of the response, please provide the list of Ids that were used to generate the response.
+                                   Always respond in es-ES.
                                    
                                    Provided data:
                                    {chunks}
@@ -40,7 +41,10 @@ public class RagService(ISearchService searchService, IConfiguration configurati
                 ChatMessageContentPart.CreateTextPart(systemMessageFormatted)),
             new UserChatMessage(ChatMessageContentPart.CreateTextPart(text))
         ];
-        var chatCompletion = await chatClient.CompleteChatAsync(messages);
+        var chatCompletion = await chatClient.CompleteChatAsync(messages, new ChatCompletionOptions()
+        {
+            Temperature = 0.1f
+        });
         var result = chatCompletion.Value.Content[0].Text;  
         return result;
     }
