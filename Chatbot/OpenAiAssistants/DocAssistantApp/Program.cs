@@ -17,11 +17,7 @@ IConfiguration config = builder.Build();
 
 var client = GetClient();
 var assistantClient = client.GetAssistantClient();
-var vectorStoreClient = client.GetVectorStoreClient();
-var fileClient = client.GetOpenAIFileClient();
 
-VectorStore vectorStore = await CreateVectorStore();
-OpenAIFile file = await UploadFileAsync();
 AssistantThread thread = await assistantClient.CreateThreadAsync();
 Assistant assistant = await CreateAssistantAsync();
 
@@ -66,15 +62,7 @@ while (true)
         {
            var text = contentItem.Text;
            
-            if (contentItem.TextAnnotations.Count > 0)
-            {
-                foreach (var annotation in contentItem.TextAnnotations)
-                {
-                    text = text.Replace(annotation.TextToReplace, $" (\U0001F4D5 Document Id: {annotation.InputFileId})");
-                }
-            }
-            
-            CliInterface.WriteLine($"{text}");
+           CliInterface.WriteLine($"{text}");
         }
     } 
             
@@ -85,33 +73,8 @@ while (true)
     CliInterface.BreakLine();
 }
 
-await fileClient.DeleteFileAsync(file.Id);
-await vectorStoreClient.DeleteVectorStoreAsync(vectorStore.Id);
 await assistantClient.DeleteThreadAsync(thread.Id);
 await assistantClient.DeleteAssistantAsync(assistant.Id);
-
-async Task<OpenAIFile> UploadFileAsync()
-{
-    byte[] byteArray = Encoding.UTF8.GetBytes(Constants.FileContent);
-
-    using var stream = new MemoryStream(byteArray);
-    
-    var result = await fileClient.UploadFileAsync(stream, Constants.FileName, FileUploadPurpose.Assistants);
-    
-    await vectorStoreClient.AddFileToVectorStoreAsync(vectorStore.Id, result.Value.Id, true);
-    
-    return result.Value!;
-}
-
-async Task<VectorStore> CreateVectorStore()
-{
-    var result = await vectorStoreClient.CreateVectorStoreAsync(true, new VectorStoreCreationOptions
-    {
-        Name = "Docs"
-    });
-
-    return result.Value!;
-}
     
 async Task<Assistant> CreateAssistantAsync()
 {
@@ -119,16 +82,7 @@ async Task<Assistant> CreateAssistantAsync()
     var assistantOptions = new AssistantCreationOptions
     {
         Name = "my-assistant",
-        Instructions = Constants.AssistantInstructions,
-        Tools = { new FileSearchToolDefinition() },
-        ToolResources = new ToolResources()
-        {
-            
-            FileSearch = new FileSearchToolResources
-            {
-                VectorStoreIds = { vectorStore.Id }
-            }
-        }
+        Instructions = Constants.AssistantInstructions
     };
     
     return await assistantClient.CreateAssistantAsync(config["AzureOpenAi:Model"]!, assistantOptions);

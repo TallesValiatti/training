@@ -6,13 +6,10 @@ public class Constants
 {
     public const string AssistantInstructions =
         """
-        You are a helpful assistant that can help fetch data from files you know about".
-        """;
-    
-    public const string FileName = "Doc.md";
-    
-    public const string FileContent =
-        """
+        You are a helpful assistant that can help fetch data from private data you know about
+        
+        Data:
+        
         # What is the Azure OpenAI Service?
         
         ## Article
@@ -282,6 +279,8 @@ public class Constants
         ## Related content
         - [Create an Azure SQL Database](https://azure.microsoft.com/en-us/services/sql-database/)
         - [Migrate to Azure SQL](https://learn.microsoft.com/en-us/azure/sql-database/sql-database-migration-guidance)
-        - [Azure SQL Pricing](https://azure.microsoft.com/en-us/pricing/details/sql-database/)
+        - [Azure SQL Pricing](https://azure.microsoft.com/en-us/pricing/details/sql-database/)".
         """;
+    
+    public const string FileName = "Doc.md";
 }

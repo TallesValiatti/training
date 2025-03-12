@@ -11,6 +11,7 @@ public static class CliInterface
             Header = new PanelHeader("Doc assistant"),
             Padding = new Padding(3, 0, 3, 0),
             Border = BoxBorder.Rounded
+            
         };
 
         AnsiConsole.Write(panel);
